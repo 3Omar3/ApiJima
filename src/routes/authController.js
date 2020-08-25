@@ -8,7 +8,8 @@ const config = require("../config");
 // verificacion del token
 function verifyToken(req, res, next) {
   const token = req.headers["access-token"];
-  if (typeof token !== "undefined" || !token) {
+
+  if (!token) {
     req.token = token;
     next();
   } else res.sendStatus(403);

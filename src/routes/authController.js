@@ -9,25 +9,25 @@ const config = require("../config");
 function verifyToken(req, res, next) {
   const token = req.headers["access-token"];
 
-  if (!token) {
-    req.token = token;
-    next();
-  } else res.sendStatus(403);
+  if (token) {
+    // decodificacion token
+    jwt.verify(token, config.secret, (err, authData) => {
+      if (err) res.sendStatus(401);
+      else {
+        req.id = authData.id;
+        next();
+      }
+    });
+  } else res.sendStatus(401);
 }
 
 router.get("/login", verifyToken, (req, res) => {
-  // decodificacion token
-  const decoded = jwt.verify(req.token, config.secret, (err, authData) => {
-    if (err) res.sendStatus(403);
-    else return authData.id;
-  });
-
   connection.query(
     "select * from usuarios where ID_Usuario = ?",
-    [decoded],
+    [req.id],
     (err, rows, fields) => {
       if (!err) res.json(rows);
-      else console.log(err);
+      else res.sendStatus(500);
     }
   );
 });

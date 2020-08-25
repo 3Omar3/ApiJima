@@ -10,7 +10,7 @@ app.use(express.json()); // convierte recibidos o enviados a formatos json
 app.use(helmet()); // activamos la seguridad
 
 // Routes
-app.use(require("./routes/usuarios"));
+app.use(require("./routes/authController"));
 
 // Starting Server
 app.listen(app.get("port"), () => {

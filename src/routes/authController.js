@@ -21,13 +21,17 @@ function verifyToken(req, res, next) {
   } else res.sendStatus(401);
 }
 
-router.get("/login", verifyToken, (req, res) => {
+router.get("/login", (req, res) => {
+  const user = req.body;
+
   connection.query(
-    "select * from usuarios where ID_Usuario = ?",
-    [req.id],
+    "select id_usuario from usuarios where correo = ? and contrasena = MD5( ? )",
+    [user.correo, user.contrasenia],
     (err, rows, fields) => {
-      if (!err) res.json(rows);
-      else res.sendStatus(500);
+      if (rows.length > 0 && !err) {
+        const token = jwt.sign({ id: rows[0].id_usuario }, config.secret);
+        res.json({ auth: true, token });
+      } else res.json({ auth: false });
     }
   );
 });

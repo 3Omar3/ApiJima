@@ -80,7 +80,8 @@ router.post("/signup", (req, res) => {
       if (!err) {
         const token = jwt.sign({ id: rows.insertId }, config.secret);
         res.json({ auth: true, token });
-      } else res.json({ auth: false, Status: err.sqlMessage });
+      } else if (err.code === "ER_DUP_ENTRY") res.json({ auth: false });
+      else res.sendStatus(500);
     }
   );
 });

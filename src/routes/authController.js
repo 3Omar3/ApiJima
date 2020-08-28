@@ -21,17 +21,17 @@ function verifyToken(req, res, next) {
   } else res.sendStatus(401);
 }
 
-router.get("/login", (req, res) => {
+router.post("/login", (req, res) => {
   const user = req.body;
 
   connection.query(
     "select id_usuario from usuarios where correo = ? and contrasena = MD5( ? )",
-    [user.correo, user.contrasenia],
+    [user.email, user.password],
     (err, rows, fields) => {
       if (rows.length > 0 && !err) {
         const token = jwt.sign({ id: rows[0].id_usuario }, config.secret);
         res.json({ auth: true, token });
-      } else res.json({ auth: false });
+      } else res.status(400).json({ auth: false });
     }
   );
 });
@@ -60,8 +60,8 @@ router.post("/signup", (req, res) => {
   connection.query(
     query,
     [
-      data.correo,
-      data.contrasenia,
+      data.email,
+      data.password,
       data.foto,
       data.tipo_login,
       data.fk_referido,
@@ -80,7 +80,8 @@ router.post("/signup", (req, res) => {
       if (!err) {
         const token = jwt.sign({ id: rows.insertId }, config.secret);
         res.json({ auth: true, token });
-      } else if (err.code === "ER_DUP_ENTRY") res.json({ auth: false });
+      } else if (err.code === "ER_DUP_ENTRY")
+        res.status(400).json({ auth: false });
       else res.sendStatus(500);
     }
   );

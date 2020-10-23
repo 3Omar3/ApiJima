@@ -11,6 +11,7 @@ app.use(helmet()); // activamos la seguridad
 
 // Routes
 app.use(require("./routes/authController"));
+app.use(require("./routes/homeController"));
 
 // Starting Server
 app.listen(app.get("port"), () => {

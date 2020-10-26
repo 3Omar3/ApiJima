@@ -14,6 +14,15 @@ app.use(require("./routes/authController"));
 app.use(require("./routes/homeController"));
 
 // Starting Server
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log("Server on port", app.get("port"));
+});
+
+// Websocket
+const SocketIO = require("socket.io");
+const io = SocketIO(server);
+
+// websockets
+io.on("connection", (socket) => {
+  console.log("new socket connection");
 });

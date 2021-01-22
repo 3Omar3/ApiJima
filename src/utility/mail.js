@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer"); // email sender function
 
 // envio de correo
-const sendMail = (email, subject, html, res) => {
+const sendMail = (email, subject, html) => {
   // cuenta de correo
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -20,8 +20,8 @@ const sendMail = (email, subject, html, res) => {
       html,
   };
 
-  transporter.sendMail(mailOptions, (err) => {
-    if (err) res.status(500).json({ error: "send mail" });
+  transporter.sendMail(mailOptions, (e) => {
+    return new Error({ error: "send mail" });
   });
 };
 

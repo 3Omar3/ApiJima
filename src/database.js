@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+const mysql = require("promise-mysql");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -7,9 +7,8 @@ const connection = mysql.createConnection({
   database: "jima",
 });
 
-connection.connect(function (err) {
-  if (err) console.log("error");
-  else console.log("Database connected");
-});
+function getConnection() {
+  return connection;
+}
 
-module.exports = connection;
+module.exports = { getConnection };

@@ -11,7 +11,7 @@ app.use(helmet()); // activamos la seguridad
 
 // Routes
 app.use(require("./routes/authController"));
-app.use(require("./routes/homeController"));
+app.use(require("./routes/mainController"));
 
 // Starting Server
 const server = app.listen(app.get("port"), () => {
@@ -25,4 +25,8 @@ const io = SocketIO(server);
 // websockets
 io.on("connection", (socket) => {
   console.log("new socket connection");
+
+  socket.on("statusBalance", (data) => {
+    console.log(data);
+  });
 });

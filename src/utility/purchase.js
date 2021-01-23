@@ -13,7 +13,7 @@ async function getPruchaseYears() {
     for (let e of res) arr.push(e.anios);
     return arr;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -53,7 +53,7 @@ async function getPurchasePredios(anio, idCliente) {
 
     return res;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 

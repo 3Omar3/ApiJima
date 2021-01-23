@@ -16,7 +16,7 @@ async function getPrecios() {
     });
     return arr;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -128,7 +128,7 @@ async function getTabuladores(predio, fechaPlantar, cantidad) {
     }
     return { precio, kilos, total };
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -234,7 +234,7 @@ async function getVentas(idCliente) {
 
     return { totalVentas, ventas };
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -304,7 +304,7 @@ async function getDetalleSaldo(idCliente) {
       return { detalles: arr[0].detalles, totales: arr[1].totales };
     } else return { detalles: null, totales: arr[0].totales };
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -318,7 +318,7 @@ async function getPrecios() {
     const result = await conn.query(sql);
     return { plant: result[0].monto, kg: result[1].monto };
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -375,7 +375,7 @@ async function getProyecciones(idCliente) {
     });
     return { tabla: arr[0].tabla, totales: arr[1].totales };
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 

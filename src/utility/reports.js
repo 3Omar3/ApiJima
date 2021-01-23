@@ -8,7 +8,7 @@ async function getCompras() {
       "SELECT ID_Compra, compras.Fecha_Registro AS toDate, DATE_FORMAT(compras.Fecha_Registro, '%d-%m-%Y %r') AS Fecha, DATE_FORMAT(compras.Fecha_Registro, '%Y-%m-%d') AS Fecha_Registro, Nombre AS Predio, Fecha_Plantar, compras.Cantidad AS Cantidad, $tipoPrecioC AS Precio, compras.Tipo AS Tipo, kilos, total AS total, FK_Sugerido, Calificacion FROM compras INNER JOIN ventas ON FK_Venta=ID_Venta INNER JOIN predios ON FK_Predio=ID_Predio $comprador";
     return arr;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -100,7 +100,7 @@ async function getTransacciones(tipo = 2, idCliente) {
 
     return arr;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 

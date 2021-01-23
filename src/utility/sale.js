@@ -13,7 +13,7 @@ async function getSaleYears() {
     for (let e of res) arr.push(e.anios);
     return arr;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -26,7 +26,7 @@ async function checkSalePredios(idCliente) {
 
     return res.length ? true : false;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 
@@ -66,7 +66,7 @@ async function getSalePredios(anio, idCliente) {
 
     return res;
   } catch (e) {
-    throw new Error(e);
+    throw e;
   }
 }
 

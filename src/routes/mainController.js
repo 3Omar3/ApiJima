@@ -71,11 +71,14 @@ router.post("/sale/predios", verifyToken, async (req, res) => {
 
 router.get("/sale", verifyToken, async (req, res) => {
   try {
-    const check = await sale.checkSalePredios(159);
+    const check = await sale.checkSalePredios(req.idClient);
     if (!check) return res.status(400).json("no hay predios");
 
     const years = await sale.getSaleYears();
-    const predios = await sale.getSalePredios(years[years.length - 1], 159);
+    const predios = await sale.getSalePredios(
+      years[years.length - 1],
+      req.idClient
+    );
 
     res.status(200).json({ years, predios });
   } catch (e) {
